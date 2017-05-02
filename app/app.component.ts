@@ -8,7 +8,10 @@ import { Component } from '@angular/core';
     <h3>{{month}}/{{day}}/{{year}}</h3>
     <h3>What time is it? Burger time. AKA: {{time}}</h3>
     <h3>{{currentFocus}}</h3>
-    <img src="resources/images/bobs.jpeg">
+    <img (click)="showBurger()" src="resources/images/bobs.jpeg">
+    <div *ngIf="burgerShow">
+      <img src="resources/images/burger.gif" alt="loading">
+    </div>
     <h2>Burgers</h2>
     <ul>
       <li [class]="ratingColor(recipe)" (click)="isGood(recipe)" *ngFor="let recipe of recipes">{{recipe.title}} <button (click)="editRecipe(recipe)">Edit!</button></li>
@@ -49,6 +52,7 @@ export class AppComponent {
     new Recipe('Don\'t you Four Chedda\' \'Bout Me Burger', ['cheddar', 'white cheddar', 'smoked cheddar', 'extra sharp cheddar'], ['1. Create a 4 cheese blend of your 4 cheeses', '2. Place the mixture on top of your burger'], 3)
   ];
   selectedRecipe = null;
+  burgerShow = null;
 
   editRecipe(clickedRecipe) {
     this.selectedRecipe = clickedRecipe;
@@ -72,7 +76,13 @@ export class AppComponent {
   finishedEditing() {
     this.selectedRecipe = null;
   }
-
+  showBurger() {
+    if (this.burgerShow) {
+      this.burgerShow = null;
+    } else {
+      this.burgerShow = true;
+    }
+  }
 
 }
 
