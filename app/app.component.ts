@@ -15,6 +15,7 @@ import { Component } from '@angular/core';
     </ul>
     <hr>
     <div>
+      <div *ngIf="selectedRecipe">
       <h3>{{selectedRecipe.title}}</h3>
       <p>Is this recipe good? {{selectedRecipe.good}}</p>
       <h3>Edit Recipe</h3>
@@ -26,6 +27,7 @@ import { Component } from '@angular/core';
       <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="1">1 (yuck)<br>
       <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="2">2 (I guess it's ok)<br>
       <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="3">3 (yum)
+      <button (click)="finishedEditing()">Done</button>
     </div>
   </div>
   `
@@ -46,7 +48,7 @@ export class AppComponent {
     new Recipe('Cheeses is Born Burger', ['mozzarella'], ['1. Stick the cheese in the burger', '2. Cook burger'], 1 ),
     new Recipe('Don\'t you Four Chedda\' \'Bout Me Burger', ['cheddar', 'white cheddar', 'smoked cheddar', 'extra sharp cheddar'], ['1. Create a 4 cheese blend of your 4 cheeses', '2. Place the mixture on top of your burger'], 3)
   ];
-  selectedRecipe: Recipe = this.recipes[0];
+  selectedRecipe = null;
 
   editRecipe(clickedRecipe) {
     this.selectedRecipe = clickedRecipe;
@@ -66,6 +68,9 @@ export class AppComponent {
     } else {
       return "bg-info";
     }
+  }
+  finishedEditing() {
+    this.selectedRecipe = null;
   }
 
 
