@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
     <img src="resources/images/bobs.jpeg">
     <h2>Burgers</h2>
     <ul>
-      <li *ngFor="let recipe of recipes">{{recipe.title}} <button (click)="editRecipe()">Edit!</button></li>
+      <li [class]="ratingColor(recipe)" (click)="isGood(recipe)" *ngFor="let recipe of recipes">{{recipe.title}} <button (click)="editRecipe()">Edit!</button></li>
     </ul>
   </div>
   `
@@ -27,17 +27,36 @@ export class AppComponent {
   minute: number = this.currentTime.getMinutes();
   time: string = this.hour + ':' + this.minute;
   recipes: Recipe[] = [
-    new Recipe('Smells Like Bean Spirit', ['beans', 'pepper jack'], ['1. Re-fry them beans', '2. Add pepper jack cheese']),
-    new Recipe('Poutine on the Ritz Burger', ['poutine', 'gravy', 'cheese curds'], ['1. Cook up some poutine', '2. Throw in some gravy', '3. Simmer...']),
-    new Recipe('Cheeses is Born Burger', ['mozzarella'], ['1. Stick the cheese in the burger', '2. Cook burger'] ),
-    new Recipe('Don\'t you Four Chedda\' \'Bout Me Burger', ['cheddar', 'white cheddar', 'smoked cheddar', 'extra sharp cheddar'], ['1. Create a 4 cheese blend of your 4 cheeses', '2. Place the mixture on top of your burger'])
+    new Recipe('Smells Like Bean Spirit', ['beans', 'pepper jack'], ['1. Re-fry them beans', '2. Add pepper jack cheese'], 3),
+    new Recipe('Poutine on the Ritz Burger', ['poutine', 'gravy', 'cheese curds'], ['1. Cook up some poutine', '2. Throw in some gravy', '3. Simmer...'], 2),
+    new Recipe('Cheeses is Born Burger', ['mozzarella'], ['1. Stick the cheese in the burger', '2. Cook burger'], 1 ),
+    new Recipe('Don\'t you Four Chedda\' \'Bout Me Burger', ['cheddar', 'white cheddar', 'smoked cheddar', 'extra sharp cheddar'], ['1. Create a 4 cheese blend of your 4 cheeses', '2. Place the mixture on top of your burger'], 3)
   ];
 
   editRecipe() {
     alert("You just requested to edit a recipe!");
   }
+  isGood(recipe) {
+    if(recipe.good === true) {
+      alert("Cool");
+    } else {
+      alert("Not Cool");
+    }
+  }
+  ratingColor(recipe) {
+    if (recipe.rating === 3) {
+      return "red";
+    } else if (recipe.rating === 2) {
+      return "bg-warning";
+    } else {
+      return "bg-info";
+    }
+  }
+
+
 }
 
 export class Recipe {
-  constructor(public title: string, public ingredients: string[], public directions: string[]) {}
+  public good: boolean = true;
+  constructor(public title: string, public ingredients: string[], public directions: string[], public rating: number) {}
 }
