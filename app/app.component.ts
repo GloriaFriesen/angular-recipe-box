@@ -9,6 +9,10 @@ import { Component } from '@angular/core';
     <h3>What time is it? Burger time. AKA: {{time}}</h3>
     <h3>{{currentFocus}}</h3>
     <img src="resources/images/bobs.jpeg">
+    <h2>Burgers</h2>
+    <ul>
+      <li *ngFor="let recipe of recipes">{{recipe.title}}</li>
+    </ul>
   </div>
   `
 })
@@ -22,4 +26,14 @@ export class AppComponent {
   hour: number = this.currentTime.getHours();
   minute: number = this.currentTime.getMinutes();
   time: string = this.hour + ':' + this.minute;
+  recipes: Recipe[] = [
+    new Recipe('Smells Like Bean Spirit'),
+    new Recipe('Poutine on the Ritz Burger'),
+    new Recipe('Cheeses is Born Burger'),
+    new Recipe('Don\'t you Four Chedda\' \'Bout Me Burger')
+  ];
+}
+
+export class Recipe {
+  constructor(public title: string) {}
 }
