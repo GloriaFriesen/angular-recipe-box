@@ -11,8 +11,22 @@ import { Component } from '@angular/core';
     <img src="resources/images/bobs.jpeg">
     <h2>Burgers</h2>
     <ul>
-      <li [class]="ratingColor(recipe)" (click)="isGood(recipe)" *ngFor="let recipe of recipes">{{recipe.title}} <button (click)="editRecipe()">Edit!</button></li>
+      <li [class]="ratingColor(recipe)" (click)="isGood(recipe)" *ngFor="let recipe of recipes">{{recipe.title}} <button (click)="editRecipe(recipe)">Edit!</button></li>
     </ul>
+    <hr>
+    <div>
+      <h3>{{selectedRecipe.title}}</h3>
+      <p>Is this recipe good? {{selectedRecipe.good}}</p>
+      <h3>Edit Recipe</h3>
+      <label>Enter Recipe Title:</label>
+      <input [(ngModel)]="selectedRecipe.title">
+
+      <label>Enter Recipe Rating (1-3):</label>
+      <br>
+      <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="1">1 (yuck)<br>
+      <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="2">2 (I guess it's ok)<br>
+      <input type="radio" [(ngModel)]="selectedRecipe.rating" [value]="3">3 (yum)
+    </div>
   </div>
   `
 })
@@ -32,15 +46,16 @@ export class AppComponent {
     new Recipe('Cheeses is Born Burger', ['mozzarella'], ['1. Stick the cheese in the burger', '2. Cook burger'], 1 ),
     new Recipe('Don\'t you Four Chedda\' \'Bout Me Burger', ['cheddar', 'white cheddar', 'smoked cheddar', 'extra sharp cheddar'], ['1. Create a 4 cheese blend of your 4 cheeses', '2. Place the mixture on top of your burger'], 3)
   ];
+  selectedRecipe: Recipe = this.recipes[0];
 
-  editRecipe() {
-    alert("You just requested to edit a recipe!");
+  editRecipe(clickedRecipe) {
+    this.selectedRecipe = clickedRecipe;
   }
   isGood(recipe) {
     if(recipe.good === true) {
-      alert("Cool");
+      console.log("cool");
     } else {
-      alert("Not Cool");
+      console.log("not cool");
     }
   }
   ratingColor(recipe) {
